@@ -1,0 +1,79 @@
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 80%;
+    //font-size: 16px;
+}
+
+body.waiting * {
+    cursor: progress;
+}
+
+/*---- new for validation ----*/
+.box1 {
+  display: inline-block;
+  width: 140px;
+  text-align: left;
+  /*margin-top: 10px;*/
+  margin-bottom: 10px;
+  /*border: 1px solid; */
+}​
+.my-error-class {
+    color:#FF0000;  /* red */
+}
+.error {
+    color:#FF0000;
+}
+/*---------------------------*/
+
+h1 {
+    font-size: 250%;
+}
+
+.errmsg {
+	color:  red;
+	font-weight: bold;
+}
+
+table.ex1 {
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+table.mytable tr td{
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.cdrtable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.ui-widget {
+    font-size:100%;
+}
+
+.ajaxLoading {  
+  cursor: progress !important;  
+}  
+
+.hidden {
+	visibility: hidden;
+	over-flow: hidden;
+	width: 0px;
+	height: 0px;
+}
+
+.infoTitleClass .ui-dialog-titlebar {
+	background:LightBlue;
+}
+
+.errorTitleClass .ui-dialog-titlebar {
+	background:Violet;
+}
+
+.alertTitleClass .ui-dialog-titlebar {
+	background:Tomato;
+}

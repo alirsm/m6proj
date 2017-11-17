@@ -1,0 +1,128 @@
+.loginpage {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.loginlogo {
+    text-align: center;
+	margin-bottom: 20px;
+}
+
+#loginform { 
+	background-color: #fff;
+	border: 1px solid #c6c4c4;
+	box-shadow: 0 0 6px rgba(0,0,0,0.11);
+	margin: auto; 	
+	display: block;
+	margin: 8% auto;
+	width: 300px; 
+	position: relative;
+	padding: 25px;
+}
+
+.login-email label,.login-ext label, .login-password label {
+	display: none;
+	text-indent: -9999px;
+}
+
+.logininput { 
+	background-color: #fbfbfb;
+	border: solid 1px #c6c4c4; 
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: #767676;	
+	height: 35px;
+	line-height: auto;
+	outline: none;
+	padding-left: 27px;
+	width: 100%;
+	box-sizing: border-box;
+	transition: box-shadow 0.3s ease;
+}
+
+#loginform p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.logininput:focus{ 
+	box-shadow: 0 0 4px #c6c4c4; 
+	background-color:wheat;
+	
+}
+
+.login-email:after {	
+	content: url(images/user.png);
+	color: #6d6e76;		
+	height: 12px;
+	left: 9px;
+	overflow: hidden;
+	position: relative;	
+	top: -25px;	
+	width: 11px;	
+}
+
+.login-ext:after {	
+	content: url(images/telephone.png);
+	color: #6d6e76;		
+	height: 12px;
+	left: 7px;
+	overflow: hidden;
+	position: relative;	
+	top: -25px;	
+	width: 11px;	
+}
+
+.login-password:after {
+	content: url(images/lock.png);	
+	color: #6d6e76;	
+	height: 12px;	
+	left: 10px;
+	overflow: hidden;
+	position: relative;
+	top: -24px;	
+	width: 9px;
+}
+
+.button-primary {
+	background: #418BCA; /* Old browsers */
+	box-shadow: inset 0 5px 6px -6px #4fb8ec;
+	border: none;
+	border-radius: 5px;
+	box-sizing: border-box;
+	color: #fff;
+	cursor: pointer;
+	height: 29px;
+	outline: none;
+	padding: 0 0 1px 0;
+	text-align: center;
+	text-shadow: 0 0 1px #003f91;
+	transition: background-color 0.3s linear;
+	width: 100%;
+	margin-bottom:15px;
+}
+
+.bottom-link a{
+	text-decoration:none;
+	color:#6587AC;
+	font-size: 15px;
+}
+
+.forgetpassword {
+    float: right;
+}
+
+.forget{
+	
+	color:gray;
+	font-size:18px;
+}
+.login-return{
+	text-align:center;
+	
+}
+.login-returnlink{
+	
+	color:#6587AC;
+	font-size:15px;
+	text-decoration:none;
+}
