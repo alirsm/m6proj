@@ -44,9 +44,15 @@ function init() {
 	    }
 	});
 	
-	//"Update User" tab default radio buttons
+	//Update User tab (tab 5)
 	jQuery("#usertyperadioA").prop('checked', true);
-	jQuery("#userstatusradioA").prop('checked', true);	
+	jQuery("#usertyperadioA").prop('disabled', true);
+	jQuery("#usertyperadioU").prop('disabled', true);
+	jQuery("#adduserpartition").prop('disabled', true);
+	jQuery("#adduserbtn").button({ disabled: true });
+	jQuery("#adduserbtn2").button({ disabled: true });
+	jQuery("#passwordResetApproveButton").button({ disabled: true });
+	jQuery("#passwordResetRejectButton").button({ disabled: true });
 }
 
 /*
@@ -479,6 +485,17 @@ function loaduser() {
 	var email = jQuery("#adduseremail").val();
 	var ext = jQuery("#adduserext").val();
 	
+	//jQuery("#adduseremail").val("");
+	jQuery("#adduserext").val("");
+	jQuery("#adduserfname").val("");
+	jQuery("#adduserlname").val("");
+	jQuery("#adduserphone").val("");
+	jQuery("#adduserstatus").val("");
+	jQuery("#addusertype").val("");
+	jQuery("#adduserpartition").val($("#adduserpartition option:first").val());	
+	jQuery("#usertyperadioA").prop('checked', true);
+	jQuery("#userstatusradioA").prop('checked', true);	
+	
 	if ( ! validateEmail(email) ) {
 		alertdialog("Alert", "Incorrect Email Address.");
 		return false;
@@ -503,6 +520,14 @@ function loaduser() {
 				jQuery("#adduserfname").val(result.data.fname);
 				jQuery("#adduserlname").val(result.data.lname);
 				jQuery("#adduserphone").val(result.data.phone);	
+		
+				jQuery("#usertyperadioA").prop('disabled', false);
+				jQuery("#usertyperadioU").prop('disabled', false);
+				jQuery("#adduserpartition").prop('disabled', false);
+				jQuery("#adduserbtn").button({ disabled: false });
+				jQuery("#adduserbtn2").button({ disabled: false });
+				jQuery("#passwordResetApproveButton").button({ disabled: false });
+				jQuery("#passwordResetRejectButton").button({ disabled: false });
 				
 				if (result.data.status == "A") { jQuery("#adduserstatus").val("Approved"); }
 				else if (result.data.status == "R") { jQuery("#adduserstatus").val("Registered"); }
@@ -518,9 +543,23 @@ function loaduser() {
 			}
 			else if ( result.ret == -1 ){
 				alertdialog("Alert message", result.msg);
+				jQuery("#usertyperadioA").prop('disabled', true);
+				jQuery("#usertyperadioU").prop('disabled', true);
+				jQuery("#adduserpartition").prop('disabled', true);
+				jQuery("#adduserbtn").button({ disabled: true });
+				jQuery("#adduserbtn2").button({ disabled: true });
+				jQuery("#passwordResetApproveButton").button({ disabled: true });
+				jQuery("#passwordResetRejectButton").button({ disabled: true });
 			}
 			else {
 				errdialog("Error message", result.msg);
+				jQuery("#usertyperadioA").prop('disabled', true);
+				jQuery("#usertyperadioU").prop('disabled', true);
+				jQuery("#adduserpartition").prop('disabled', true);
+				jQuery("#adduserbtn").button({ disabled: false });
+				jQuery("#adduserbtn2").button({ disabled: false });
+				jQuery("#passwordResetApproveButton").button({ disabled: true });
+				jQuery("#passwordResetRejectButton").button({ disabled: true });
 			}
 		},
 		error: function() {
@@ -555,8 +594,8 @@ function loadPartitionInfo(result) {
 /***************************************************************
 Detail  :       Add User
 ***************************************************************/
-function adduser_onclick() {	
-	console.log(arguments.callee.name + " --> ");
+function adduser_onclick(userstatus) {	
+	console.log(arguments.callee.name + " --> " + "%s", userstatus);
 	
 	var email = jQuery("#adduseremail").val();
 	var ext = jQuery("#adduserext").val();
@@ -574,6 +613,7 @@ function adduser_onclick() {
 		usertype = "U"
 	}
 	
+	/*
 	var userstatus;
 	if ( $("#userstatusradioA").prop("checked") )  {
 		userstatus = "A"
@@ -581,6 +621,7 @@ function adduser_onclick() {
 	else {
 		userstatus = "J"
 	}
+	*/
 	
 	//var usertype = $('input:radio[name=usertype]:checked').val();
 	//var usertype = $('input[name=usertype]:radio:checked').val();
@@ -594,7 +635,80 @@ function adduser_onclick() {
 		return false;
 	}
 	*/
+	
+	if ( userstatus == "J" ) {
+		msg = "Are you sure you want to Reject the request?"
+	} else if ( userstatus == "A" ) {
+		msg = "Are you sure you want to Approve the request?"
+	}
+	//msg = "Are you sure about your selection?"
+	
+	$('#div-dialog-confirm').html( "<p><span class='ui-icon ui-icon-circle-check' style='float:left; margin:0 7px 20px 0;'></span>" + msg + "</p>" );
+	$("#div-dialog-confirm").dialog({
+		modal: true,
+		resizable: false,
+      //height: "auto",
+      //width: 400,
+		title: "hello",
+		dialogClass: 'alertTitleClass',
+		buttons: {
+			"Yes": function() {
+				ret = 1;
+				console.log("Close selected ret =" + ret);
+				$(this).dialog("close");
+				
 
+				jQuery.ajax({
+					url: "php/adduser.php",
+					data: { status: userstatus,
+							email: email,
+							partitionname: partitionname,
+							usertype: usertype},
+					dataType: 'json',
+					type: "post",
+					success: function(result, textStatus) {
+						console.log(result);
+						if ( result.ret == 1 ) {
+							password = result.password;
+							infodialog("Info message", result.msg);
+							loaduser();
+							sendmailController(fname,lname,email,ext,password,userstatus)
+							console.log("infomessage");
+						}
+						else if ( result.ret == -1 ){
+							alertdialog("Alert message", result.msg);
+						}
+						else {
+							errdialog("Error message", result.msg);
+						}
+						//var obj = jQuery.parseJSON(result);
+						//console.log(obj[0].zipcode);
+						//loadPartitionInfo(result);
+					},
+					error: function() {
+						alert('Not OKay');
+					}
+				}); 
+				
+				
+			},
+			"Cancel": function() {
+				ret = 0;
+				console.log("Cancel selected ret =" + ret);
+				$(this).dialog("close");
+			},
+		}	
+		
+	});
+	
+	
+	
+	
+	
+	//var r = confirm("Are you sure?");
+	//if ( r == true) {
+		
+	/*
 	jQuery.ajax({
 		url: "php/adduser.php",
 		data: { status: userstatus,
@@ -626,6 +740,10 @@ function adduser_onclick() {
 			alert('Not OKay');
 		}
 	}); 
+	*/
+	
+	//}
+	
 }
 
 /***************************************************************
@@ -634,6 +752,7 @@ Detail  :       Reset Add User
 function adduser_reset_onclick() {	
 	console.log(arguments.callee.name + " --> ");
 	
+	/*
 	jQuery("#adduseremail").val("");
 	jQuery("#adduserext").val("");
 	jQuery("#adduserfname").val("");
@@ -641,10 +760,94 @@ function adduser_reset_onclick() {
 	jQuery("#adduserphone").val("");
 	jQuery("#adduserstatus").val("");
 	jQuery("#addusertype").val("");
+	*/
+	jQuery("#tabs-5").find("input:text").val("");
+	
 	jQuery("#adduserpartition").val($("#adduserpartition option:first").val());	
 	jQuery("#usertyperadioA").prop('checked', true);
 	jQuery("#userstatusradioA").prop('checked', true);	
 }
+
+
+/***************************************************************
+Detail  :       Reset Password
+***************************************************************/
+function resetPassword_onclick(reset) {	
+	console.log(arguments.callee.name + " --> " + "%s", reset);
+	
+	var email = jQuery("#adduseremail").val();
+	var ext = jQuery("#adduserext").val();
+
+	if ( reset == "N" ) {
+		msg = "Are you sure you want to Reject reset password request?"
+	} else if ( reset == "Y" ) {
+		msg = "Are you sure you want to Approve reset password request?"
+	}
+	//msg = "Are you sure about your selection?"
+	
+	$('#div-dialog-confirm').html( "<p><span class='ui-icon ui-icon-circle-check' style='float:left; margin:0 7px 20px 0;'></span>" + msg + "</p>" );
+	$("#div-dialog-confirm").dialog({
+		modal: true,
+		resizable: false,
+      //height: "auto",
+      //width: 400,
+		title: "hello",
+		dialogClass: 'alertTitleClass',
+		buttons: {
+			"Yes": function() {
+				ret = 1;
+				console.log("Close selected ret =" + ret);
+				$(this).dialog("close");
+				
+
+				jQuery.ajax({
+					url: "php/updateUserPassword2.php",
+					data: { status: userstatus,
+							email: email,
+							ext: ext,
+							reset: reset },
+					dataType: 'json',
+					type: "post",
+					success: function(result, textStatus) {
+						console.log(result);
+						if ( result.ret == 1 ) {
+							password = result.password;
+							infodialog("Info message", result.msg);
+							loaduser();
+							sendmailController(fname,lname,email,ext,password,userstatus)
+							console.log("infomessage");
+						}
+						else if ( result.ret == 0 ){
+							alertdialog("Alert message", result.msg);
+						}
+						else {
+							errdialog("Error message", result.msg);
+						}
+						//var obj = jQuery.parseJSON(result);
+						//console.log(obj[0].zipcode);
+						//loadPartitionInfo(result);
+					},
+					error: function() {
+						alert('Not OKay');
+					}
+				}); 
+				
+				
+			},
+			"Cancel": function() {
+				ret = 0;
+				console.log("Cancel selected ret =" + ret);
+				$(this).dialog("close");
+			},
+		}	
+		
+	});	
+	
+	
+	
+	
+}
+
 
 /***************************************************************
 Detail  :       Send Register Approval
@@ -698,7 +901,7 @@ function showForgetPassword_onclick() {
 }
 
 /***************************************************************
-Detail  :       Extract Partitions
+Detail  :       Get Partitions
 ***************************************************************/
 function getPartition(userType, partition) {
 	console.log(arguments.callee.name + " --> ");
@@ -777,7 +980,7 @@ function partition_onchange(partition) {
 }
 
 /***************************************************************
-Detail  :       Extract TNs for selected partition
+Detail  :       Get TNs for selected partition
 ***************************************************************/
 function getTN(partition) {
 	console.log(arguments.callee.name + " --> ");
@@ -788,8 +991,10 @@ function getTN(partition) {
 		data: { choice: partition },
 		type: "post",
 		success: function(result, textStatus) {
+			//console.log(result);
 			jQuery.each( $.parseJSON(result), function( key, value ) {
-				$("<option value='" + value + "'>" + value + "</option>").appendTo("#user");
+				//$("<option value='" + value + "'>" + value + "</option>").appendTo("#user");
+				$("<option value='" + value[0] + "'>" + value[0] + " (" + value[1] + ")" + "</option>").appendTo("#user");
 			});
 		},
 		error: function() {
@@ -1201,6 +1406,42 @@ function createCTM_onclick() {
 }
 
 /***************************************************************
+Detail  :       Modal confirmation
+***************************************************************/
+function confirmdialog(tit, msg)
+{
+	var ret;
+	
+	//$('#div-dialog-info').html( "<p><span class='ui-icon ui-icon-info' style='float:left; margin:0 7px 20px 0;'></span>" + msg + "</p>" );
+	$('#div-dialog-confirm').html( "<p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>" );
+	
+	$("#div-dialog-confirm").dialog({
+		modal: true,
+		resizable: false,
+      height: "auto",
+      width: 400,
+		title: tit,
+		dialogClass: 'infoTitleClass',
+		buttons: {
+			"Close": function() {
+				ret = 1;
+				console.log("Close selected ret =" + ret);
+				$(this).dialog("close");
+			},
+			"Cancel": function() {
+				ret = 0;
+				console.log("Cancel selected ret =" + ret);
+				$(this).dialog("close");
+			},
+		}
+	});
+	
+	console.log("before return ret=" + ret);
+	return ret;
+}
+
+
+/***************************************************************
 Detail  :       Modal info message
 ***************************************************************/
 function infodialog(tit, msg)
@@ -1439,6 +1680,8 @@ $(function () {
 
 });
 
+
+/*
 // jquery validate
 $(document).ready(function() {
    
@@ -1483,3 +1726,4 @@ $(document).ready(function() {
        }
    });
 });
+*/

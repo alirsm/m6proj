@@ -40,13 +40,13 @@ $result = $result2 = $result3 = $result4 = "";
 $db = new Db();
 
 if ( $fromdate ===  NULL ){
-	$sql = "select TimeStart from M6s2 order by TimeStart asc limit 1";
+	$sql = "select TimeStart from M6isam order by TimeStart asc limit 1";
 	$rows = $db -> select($sql);
 	$fromdatedisplay = $rows[0]['TimeStart'];
 }
 
 if ( $todate ===  NULL ){
-	$sql = "select TimeStart from M6s2 order by TimeStart desc limit 1";
+	$sql = "select TimeStart from M6isam order by TimeStart desc limit 1";
 	$rows = $db -> select($sql);
 	$todatedisplay = $rows[0]['TimeStart'];
 }
@@ -60,19 +60,21 @@ if ( $ctmreport == 1 )
 {
 	$log->i("================== report A ==================");
 	$sql = "(select CallDirection, CEILING(sum(Duration)/60) TM
-	from M6s2
+	from M6isam
 	where CallDirection = 'O'";
 	if ( $partition != "All" ) { $sql .= " and SrcPartition = 'OcPartition: $partition'"; }
-	if ( $user != "" and  $user != "All" ) { $sql .= " and SrcCallerId='$user'"; }
+	//if ( $user != "" and  $user != "All" ) { $sql .= " and SrcCallerId='$user'"; }
+	if ( $user != "" and  $user != "All" ) { $sql .= " and SrcEndName like '%$user%'"; }
 	if ( $fromdate != "" ) { $sql .= " and TimeStart >= '$fromdate 00:00:00'"; }
 	if ( $todate != "" ) { $sql .= " and TimeStart <= '$todate 23:59:59'"; }
 	if ( $searchnumber != "" ) { $sql .= " and (SrcCallerId like '%$searchnumber%' or DstCallerId like '%$searchnumber%')"; }
 	$sql .= ") union (";
 	$sql .= "select CallDirection, round(sum(Duration)/60) TM
-	from M6s2
+	from M6isam
 	where CallDirection = 'I'";
 	if ( $partition != "All" ) { $sql .= " and DstPartition = 'OcPartition: $partition'"; }
-	if ( $user != "" and  $user != "All" ) { $sql .= " and DstCallerId='$user'"; }
+	//if ( $user != "" and  $user != "All" ) { $sql .= " and DstCallerId='$user'"; }
+	if ( $user != "" and  $user != "All" ) { $sql .= " and DstEndName like '%$user%'"; }
 	if ( $fromdate != "" ) { $sql .= " and TimeStart >= '$fromdate 00:00:00'"; }
 	if ( $todate != "" ) { $sql .= " and TimeStart <= '$todate 23:59:59'"; }
 	if ( $searchnumber != "" ) { $sql .= " and (SrcCallerId like '%$searchnumber%' or DstCallerId like '%$searchnumber%')"; }
@@ -124,10 +126,11 @@ elseif ( $ctmreport == 2 )
 {
 	$log->i("================== report B ==================");
 	$sql = "select CallDirection, callType, CEILING(sum(Duration)/60) TM
-	from M6s2
+	from M6isam
 	where RecordType = 0";
 	if ( $partition != "All" ) { $sql .= " and (SrcPartition = 'OcPartition: $partition' or DstPartition = 'OcPartition: $partition')"; }
-	if ( $user != "" and  $user != "All" ) { $sql .= " and (SrcCallerId='$user' or DstCallerId='$user')"; }
+	//if ( $user != "" and  $user != "All" ) { $sql .= " and (SrcCallerId='$user' or DstCallerId='$user')"; }
+	if ( $user != "" and  $user != "All" ) { $sql .= " and (SrcEndName like '%$user%' or DstEndName like '%$user%')"; }
 	if ( $fromdate != "" ) { $sql .= " and TimeStart >= '$fromdate 00:00:00'"; }
 	if ( $todate != "" ) { $sql .= " and TimeStart <= '$todate 23:59:59'"; }
 	if ( $searchnumber != "" ) { $sql .= " and (SrcCallerId like '%$searchnumber%' or DstCallerId like '%$searchnumber%')"; }
@@ -170,7 +173,7 @@ elseif ( $ctmreport == 3 )
 	// only for Outbound
 	$log->i("================== report C ==================");
 	$sql = "select CallDirection, SrcCallerId, substr(SrcPartition,14), CEILING(sum(Duration)/60) TM
-	from M6s2
+	from M6isam
 	where CallDirection = 'O'";
 	//if ( $partition != "All" ) { $sql .= " and substr(SrcPartition,14) = '$partition'"; }
 	if ( $partition != "All" ) { $sql .= " and SrcPartition = 'OcPartition: $partition'"; }
@@ -218,7 +221,7 @@ elseif ( $ctmreport == 4 )
 	$log->i("================== report D ==================");
 	//if ( $partition == "All" ) {
 		$sql = "select substr(SrcPartition,14), CallDirection, CEILING(sum(Duration)/60) TM
-		from M6s2
+		from M6isam
 		where CallDirection = 'O'
 		and SrcPartition != ''";
 		if ( $fromdate != "" ) { $sql .= " and TimeStart >= '$fromdate 00:00:00'"; }
@@ -228,7 +231,7 @@ elseif ( $ctmreport == 4 )
 		$sql .= " group by SrcPartition, CallDirection
 		union
 		select substr(DstPartition,14), CallDirection, CEILING(sum(Duration)/60) TM
-		from M6s2
+		from M6isam
 		where CallDirection = 'I'
 		and DstPartition != ''";
 		if ( $fromdate != "" ) { $sql .= " and TimeStart >= '$fromdate 00:00:00'"; }

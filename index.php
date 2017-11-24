@@ -387,31 +387,46 @@ Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_on
 
 <!-------  tab 5  Update User ------------------------------------->
 <div id="tabs-5">
-<p style="color:blue;"><b>(1) Search for a User by typing Email Address and press Enter.</b></p>
-<p style="color:blue;"><b>(2) Update User by assigning Partition, Type and Status.</b></p>
+<p style="color:blue;"><b>(1) Search User by typing Email Address and press Enter.</b></p>
+<p style="color:blue;"><b>(2) Register or Reset Password for the User.</b></p>
 <br>
 <fieldset>
 <legend>Update User</legend>
-<!-- <form id="tabs5form">-->
+<br>
 <label class="box1">Email Address: </label><input type="email" id="adduseremail" name="aduseremail" size="45" onblur="loaduser()" onkeydown="if (event.keyCode == 13) loaduser()"/><br>
 <label class="box1">Extension Number: </label><input style="border:none; font-weight: bold;" type="text" id="adduserext" name="adduserext" readonly/><br>
 <label class="box1">First Name: </label><input style="border:none; font-weight: bold;" type="text" id="adduserfname" name="adduserfname" size="45" readonly/><br>
 <label class="box1">Last Name: </label><input style="border:none; font-weight: bold;" type="text" id="adduserlname" name="adduserlname" size="45" readonly/><br>
 <label class="box1">Phone Number: </label><input style="border:none; font-weight: bold;" id="adduserphone" name="adduserphone" size="45" readonly/><br>
 <label class="box1">Status: </label><input style="border:none; font-weight: bold;" id="adduserstatus" name="adduserstatus" size="45" readonly/><br>
-<label class="box1">User Type: </label><input style="border:none; font-weight: bold;"id="addusertype" name="addusertype" size="45" readonly/><br><br>
+<label class="box1">User Type: </label><input style="border:none; font-weight: bold;"id="addusertype" name="addusertype" size="45" readonly/><br>
+<br>
+<!-- <button id="rejectRegisterButton" class="ui-button ui-widget ui-corner-all" onclick="adduser_reset_onclick()">Reset</button>-->
+
+<fieldset>
+<legend>Register</legend>
+<br>
 <label class="box1">Partition: </label><select id="adduserpartition" name="partition"></select><br>
 <label class="box1">User Type:</label>
 <input type="radio" id="usertyperadioA" name="usertype" value="A" checked="checked"/> Admin
 <input type="radio" id="usertyperadioU" name="usertype" value="U"/> User<br>
-<label class="box1">User Status:</label>
+<!-- <label class="box1">User Status:</label>
 <input type="radio" id="userstatusradioA" name="userstatus" value="A" checked="checked"/> Approve
-<input type="radio" id="userstatusradioJ" name="userstatus" value="J"/> Reject
-<!-- </form>-->
-</fieldset>
+<input type="radio" id="userstatusradioJ" name="userstatus" value="J"/> Reject-->
 <br>
-<button id="adduserbtn" class="ui-button ui-widget ui-corner-all" onclick="adduser_onclick()">Update User</button>
+<button id="adduserbtn" class="ui-button ui-widget ui-corner-all" onclick="adduser_onclick('A')">Approve</button>
+<button id="adduserbtn2" class="ui-button ui-widget ui-corner-all" onclick="adduser_onclick('J')">Reject</button>
 <button id="rejectRegisterButton" class="ui-button ui-widget ui-corner-all" onclick="adduser_reset_onclick()">Reset</button>
+</fieldset>
+<br><br>
+<fieldset>
+<legend>Reset Password</legend>
+<br>
+<button id="passwordResetApproveButton" class="ui-button ui-widget ui-corner-all" onclick="resetPassword_onclick('Y')">Approvee</button>
+<button id="passwordResetRejectButton" class="ui-button ui-widget ui-corner-all" onclick="resetPassword_onclick('N')">Reject</button>
+</fieldset>
+
+</fieldset>
 </div>
 <!-------  /tab 5  Update User ------------------------------------>
 
@@ -425,6 +440,8 @@ Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_on
 
   
 <!------- dialogs  --------------------------------------------->
+
+<div id="div-dialog-confirm"></div>
 
 <div id="div-dialog-info"></div>
 

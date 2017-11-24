@@ -9,7 +9,6 @@ $db = new Db();
 function partition_option()
 {
 	global $db;
-	//$rows = $db -> select("select distinct SrcPartition from M6b order by SrcPartition;");
 	$rows = $db -> select("select distinct name from PartitionTN order by name;");
 	foreach ($rows as $row)
 	{

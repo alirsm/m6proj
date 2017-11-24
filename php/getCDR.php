@@ -31,7 +31,7 @@ $log->i( "$self_filename -> (". __LINE__ ."): $partition,$user,$fromdate,$todate
 
 $db = new Db();
 $sql = "select TimeStart,TimeEnd,SrcCallerId,DstCallerId,CEILING(Duration/60),CallDirection,CallType 
-from M6new
+from M6isam
 where RecordType = 0";
 if ( $callDirectionSelected != "" ) { $sql .= " and CallDirection = '$callDirectionSelected'"; }
 if ( $partition != "All" ) 
@@ -41,8 +41,10 @@ if ( $partition != "All" )
 }
 if ( $user != "" and  $user != "All" ) 
 { 
-	if ( $callDirectionSelected == "O") { $sql .= " and SrcCallerId='$user'"; }
-	else { $sql .= " and DstCallerId='$user'"; }
+	//if ( $callDirectionSelected == "O") { $sql .= " and SrcCallerId='$user'"; }
+	//else { $sql .= " and DstCallerId='$user'"; }
+	if ( $callDirectionSelected == "O") { $sql .= " and SrcEndName like '%$user%'"; }
+	else { $sql .= " and DstEndName like '%$user%'"; }
 }
 if ( $callTypeSelected != "" ) { $sql .= " and CallType in ($callTypeSelected)"; }
 if ( $fromdate != "" ) { $sql .= " and TimeStart >= '$fromdate 00:00:00'"; }
