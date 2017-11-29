@@ -761,6 +761,7 @@ function adduser_reset_onclick() {
 	jQuery("#adduserstatus").val("");
 	jQuery("#addusertype").val("");
 	*/
+	jQuery("#adduseremail").val("");
 	jQuery("#tabs-5").find("input:text").val("");
 	
 	jQuery("#adduserpartition").val($("#adduserpartition option:first").val());	
@@ -777,6 +778,9 @@ function resetPassword_onclick(reset) {
 	
 	var email = jQuery("#adduseremail").val();
 	var ext = jQuery("#adduserext").val();
+	var fname = jQuery("#adduserfname").val();
+	var lname = jQuery("#adduserlname").val();
+	var userstatus = jQuery("#adduserstatus").val();
 
 	if ( reset == "N" ) {
 		msg = "Are you sure you want to Reject reset password request?"
@@ -802,8 +806,7 @@ function resetPassword_onclick(reset) {
 
 				jQuery.ajax({
 					url: "php/updateUserPassword2.php",
-					data: { status: userstatus,
-							email: email,
+					data: { email: email,
 							ext: ext,
 							reset: reset },
 					dataType: 'json',

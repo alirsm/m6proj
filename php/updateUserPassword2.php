@@ -19,7 +19,7 @@ if ( $CLI ) {
 else {
 	$email = ! empty($_REQUEST['email']) ? $_REQUEST['email'] : NULL;
 	$ext = ! empty($_REQUEST['ext']) ? $_REQUEST['ext'] : NULL;
-	$reset = ! empty($_REQUEST['rest']) ? $_REQUEST['reset'] : NULL;
+	$reset = ! empty($_REQUEST['reset']) ? $_REQUEST['reset'] : NULL;
 	
 	$cipher = 'AES-256-CBC';
 	$key = 'ABADAN is the best';

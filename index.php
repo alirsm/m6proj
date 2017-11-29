@@ -393,7 +393,7 @@ Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_on
 <fieldset>
 <legend>Update User</legend>
 <br>
-<label class="box1">Email Address: </label><input type="email" id="adduseremail" name="aduseremail" size="45" onblur="loaduser()" onkeydown="if (event.keyCode == 13) loaduser()"/><br>
+<label class="box1">Email Address: </label><input type="email" id="adduseremail" name="adduseremail" size="45" onblur="loaduser()" onkeydown="if (event.keyCode == 13) loaduser()"/><br>
 <label class="box1">Extension Number: </label><input style="border:none; font-weight: bold;" type="text" id="adduserext" name="adduserext" readonly/><br>
 <label class="box1">First Name: </label><input style="border:none; font-weight: bold;" type="text" id="adduserfname" name="adduserfname" size="45" readonly/><br>
 <label class="box1">Last Name: </label><input style="border:none; font-weight: bold;" type="text" id="adduserlname" name="adduserlname" size="45" readonly/><br>
@@ -422,7 +422,7 @@ Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_on
 <fieldset>
 <legend>Reset Password</legend>
 <br>
-<button id="passwordResetApproveButton" class="ui-button ui-widget ui-corner-all" onclick="resetPassword_onclick('Y')">Approvee</button>
+<button id="passwordResetApproveButton" class="ui-button ui-widget ui-corner-all" onclick="resetPassword_onclick('Y')">Approve</button>
 <button id="passwordResetRejectButton" class="ui-button ui-widget ui-corner-all" onclick="resetPassword_onclick('N')">Reject</button>
 </fieldset>
 
