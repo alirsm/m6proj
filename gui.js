@@ -333,7 +333,7 @@ function register_onclick() {
 		type: "post",
 		dataType: "json",
 		success: function(result, status) {
-			//console.log(result);
+			console.log(result);
 			//infodialog("Info message", result.msg);
 							
 			// if user added then send email
@@ -356,8 +356,12 @@ function register_onclick() {
 					}
 				});
 			}
-			else{
-				errdialog("Error message", "Unable to register user.");
+			else if ( result.ret == 0 ){
+				//alertdialog("Alert message", "Unable tooo register user.");
+				alertdialog("Alert message", result.msg);
+			}
+			else {
+				errdialog("Error message", result.msg);
 			}
 			
 			
@@ -414,30 +418,67 @@ Detail  :       Forget Password
 function forgetpassword_onclick() {	
 	console.log(arguments.callee.name + " --> ");
 	
-	var forgetfname = jQuery("#forgetfname").val();
-	var forgetlname = jQuery("#forgetlname").val();
-	var forgetemail = jQuery("#forgetemail").val();
-	var forgetext = jQuery("#forgetext").val();
+	var fname = jQuery("#forgetfname").val();
+	var lname = jQuery("#forgetlname").val();
+	var email = jQuery("#forgetemail").val();
+	var ext = jQuery("#forgetext").val();
 		
 	console.log(arguments.callee.name + " --> " + "%s;%s;%s;%s", forgetfname,forgetlname,forgetemail,forgetext);
+
 	
 	jQuery.ajax({
-		url: "php/sendmailController.php",
-		data: { userFname: forgetfname,
-				  userLname: forgetlname,
-				  userEmail: forgetemail,
-				  userExt: forgetext,
-				  serviceType: "ResetRequest"},
+		url: "php/resetRequest.php",
+		data: { fname: fname,
+				  lname: lname,
+				  email: email,
+				  ext: ext},
 		type: "post",
 		dataType: "json",
 		success: function(result, status) {
-			//console.log(result);
-			infodialog("Info message", result.msg);	
+			console.log(result);
+			//infodialog("Info message", result.msg);
+							
+			// if user added then send email
+			if ( result.ret == 1 ) {
+	
+	
+				jQuery.ajax({
+					url: "php/sendmailController.php",
+					data: { userFname: fname,
+							  userLname: lname,
+							  userEmail: email,
+							  userExt: ext,
+							  serviceType: "ResetRequest"},
+					type: "post",
+					dataType: "json",
+					success: function(result, status) {
+						//console.log(result);
+						infodialog("Info message", result.msg);	
+					},
+					error: function() {
+						alert("Not OKay status:" +  status);
+					}
+				});
+	
+			}
+			else if ( result.ret == 0 ){
+				//alertdialog("Alert message", "Unable tooo register user.");
+				alertdialog("Alert message", result.msg);
+			}
+			else {
+				errdialog("Error message", result.msg);
+			}
+			
+			
 		},
 		error: function() {
 			alert("Not OKay status:" +  status);
 		}
 	});
+	
+	
+	
+	
 }
 
 /***************************************************************
@@ -526,13 +567,20 @@ function loaduser() {
 				jQuery("#adduserpartition").prop('disabled', false);
 				jQuery("#adduserbtn").button({ disabled: false });
 				jQuery("#adduserbtn2").button({ disabled: false });
+				
+				if ( result.data.reset == "R" )  {
 				jQuery("#passwordResetApproveButton").button({ disabled: false });
 				jQuery("#passwordResetRejectButton").button({ disabled: false });
+				}
 				
-				if (result.data.status == "A") { jQuery("#adduserstatus").val("Approved"); }
-				else if (result.data.status == "R") { jQuery("#adduserstatus").val("Registered"); }
+				if (result.data.status == "R") { jQuery("#adduserstatus").val("Requested"); }
+				else if (result.data.status == "A") { jQuery("#adduserstatus").val("Approved"); }
 				else if (result.data.status == "J") { jQuery("#adduserstatus").val("Rejected"); }
 				else if (result.data.status == "X") { jQuery("#adduserstatus").val("Disabled"); }
+				
+				if (result.data.reset == "R") { jQuery("#adduserreset").val("Requested"); }
+				else if (result.data.reset == "A") { jQuery("#adduserreset").val("Approved"); }
+				else if (result.data.reset == "J") { jQuery("#adduserreset").val("Rejected"); }
 				
 				if (result.data.usertype == "S") { jQuery("#addusertype").val("Super"); }
 				else if (result.data.usertype == "A") { jQuery("#addusertype").val("Admin"); }
@@ -805,7 +853,7 @@ function resetPassword_onclick(reset) {
 				
 
 				jQuery.ajax({
-					url: "php/updateUserPassword2.php",
+					url: "php/updatePassword2.php",
 					data: { email: email,
 							ext: ext,
 							reset: reset },

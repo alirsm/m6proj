@@ -71,9 +71,9 @@ table.mytable tr td{
 }
 
 .errorTitleClass .ui-dialog-titlebar {
-	background:Violet;
+	background:Tomato;
 }
 
 .alertTitleClass .ui-dialog-titlebar {
-	background:Tomato;
+	background:Violet;
 }

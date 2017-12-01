@@ -398,7 +398,8 @@ Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_on
 <label class="box1">First Name: </label><input style="border:none; font-weight: bold;" type="text" id="adduserfname" name="adduserfname" size="45" readonly/><br>
 <label class="box1">Last Name: </label><input style="border:none; font-weight: bold;" type="text" id="adduserlname" name="adduserlname" size="45" readonly/><br>
 <label class="box1">Phone Number: </label><input style="border:none; font-weight: bold;" id="adduserphone" name="adduserphone" size="45" readonly/><br>
-<label class="box1">Status: </label><input style="border:none; font-weight: bold;" id="adduserstatus" name="adduserstatus" size="45" readonly/><br>
+<label class="box1">Register Status: </label><input style="border:none; font-weight: bold;" id="adduserstatus" name="adduserstatus" size="45" readonly/><br>
+<label class="box1">Reset Status: </label><input style="border:none; font-weight: bold;" id="adduserreset" name="adduserreset" size="45" readonly/><br>
 <label class="box1">User Type: </label><input style="border:none; font-weight: bold;"id="addusertype" name="addusertype" size="45" readonly/><br>
 <br>
 <!-- <button id="rejectRegisterButton" class="ui-button ui-widget ui-corner-all" onclick="adduser_reset_onclick()">Reset</button>-->

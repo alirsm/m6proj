@@ -21,7 +21,7 @@ else {
 $log->i( "$self_filename -> (". __LINE__ ."): $email" );
 
 $db = new Db();
-$sql = "select ext,fname,lname,phone,status,usertype,partitionname,password from M6User where email='$email'";
+$sql = "select ext,fname,lname,phone,status,reset,usertype,partitionname,password from M6User where email='$email'";
 $rows = $db -> select($sql);
 $count = count($rows);
 if ( $count != 1 ) {

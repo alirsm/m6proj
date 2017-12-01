@@ -120,7 +120,7 @@ function get_include_contents($filename)
 				break;
 			case "resetRequestMailMessage.php":
 				echo create_resetRequestMailMessage($fromEmail, $toEmail, $subject, $userName, $userEmail, $userPhone, $userExt, $partitionname, $usertype);
-				$msg = "Reset request email has been sent.";
+				$msg = "Request for password reset has been sent.";
 				break;
 		}
 		$contents = ob_get_contents();

@@ -38,65 +38,75 @@ date_default_timezone_set('US/Eastern');
 $now = date("Y-m-d H:i:s");
 
 $db = new Db();
-$sql = "select email, ext, status from M6User where email='$email'";
+$sql = "select email, ext, status from M6User where email2='$email'";
 $log->i( $sql );
 $rows = $db -> select($sql);
-$count = count($rows);
-
-if ( $count == 1 ) {
-	$mystatus = $rows[0]['status'];
-	if ( $mystatus == "R" ) {
-		$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} already registered" );
-		$msg = "The email address has already registered.";
-		$ret = -1;
-		print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
-		exit(0);
-	}
-	else if ( $mystatus == "A" ) {
-		$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} already registered and approved" );
-		$msg = "The email addrss has already registered and approved.";
-		$ret = -1;
-		print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
-		exit(0);
-	}
-	else if ( $mystatus == "J" ) {
-		$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} already registered and rejected" );
-		$msg = "The email addrss has already registered and rejected.";
-		$ret = -1;
-		print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
-		exit(0);
-	}
-	else if ( $mystatus == "X" ) {
-		$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} is disabled" );
-		$msg = "The email addrss has disabled.";
-		$ret = -1;
-		print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
-		exit(0);
+if ( $rows !== false) {
+	$count = count($rows);
+	$log->i( "$self_filename -> (" . __LINE__ . "): count={$count}" );
+	
+	if ( $count == 1 ) {
+		$mystatus = $rows[0]['status'];
+		if ( $mystatus == "R" ) {
+			$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} already registered" );
+			$msg = "The email address has already registered.";
+			$ret = 0;
+			print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
+			exit(0);
+		}
+		else if ( $mystatus == "A" ) {
+			$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} already registered and approved" );
+			$msg = "The email addrss has already registered and approved.";
+			$ret = 0;
+			print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
+			exit(0);
+		}
+		else if ( $mystatus == "J" ) {
+			$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} already registered and rejected" );
+			$msg = "The email addrss has already registered and rejected.";
+			$ret = 0;
+			print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
+			exit(0);
+		}
+		else if ( $mystatus == "X" ) {
+			$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} is disabled" );
+			$msg = "The email addrss has disabled.";
+			$ret = 0;
+			print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
+			exit(0);
+		}
+		else {
+			$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} exists with status={$status}" );
+			$msg = "The email address already existed with status = {$status}.";
+			$ret = 0;
+			print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
+			exit(0);
+		}
 	}
 	else {
-		$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} exists with status={$status}" );
-		$msg = "The email address already existed with status = {$status}.";
+		//add user 
+		$sql = "insert into M6User (fname,lname,email,ext,status,password,register_time) 
+		        values ('$fname','$lname','$email','$ext','$status','$hashPassword','$now')";
+		$log->i( $sql );
+	}
+	
+	if ( $db -> query($sql) ) { 
+		$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} password={$password} registered" );
+		$ret = 1;
+		$msg = "User has been registered.";
+	}
+	else {
+		$log->e( "$self_filename -> (" . __LINE__ . "): unable to register email={$email}" );
 		$ret = -1;
-		print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
-		exit(0);
+		$msg = "Unable to register user.";
 	}
 }
 else {
-	//add user 
-	$sql = "insert into M6User (fname,lname,email,ext,status,password,register_time) 
-	        values ('$fname','$lname','$email','$ext','$status','$hashPassword','$now')";
-	$log->i( $sql );
-}
-
-if ( $db -> query($sql) ) { 
-	$log->i( "$self_filename -> (" . __LINE__ . "): email={$email} password={$password} registered" );
-	$ret = 1;
-	$msg = "User has been registered.";
-}
-else {
-	$log->e( "$self_filename -> (" . __LINE__ . "): unable to register email={$email}" );
-	$ret = -2;
+	$log->i( "$self_filename -> (" . __LINE__ . "): unable to run query" );
 	$msg = "Unable to register user.";
+	$ret = -1;
+	print json_encode( array( 'ret' => $ret, 'msg' => $msg ) );
+	exit(-1);
 }
 
 print json_encode( array( 'ret' => $ret, 'msg' => $msg, 'password' => $password ) );
