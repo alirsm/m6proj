@@ -73,15 +73,15 @@ HEAD;
 	
 	//$val3 = openssl_encrypt("A", $cipher, $key, 0, $iv);
 	$val3 = "Y";
-	//echo "<a href='http://68.200.25.190/m6ui/php/updateUserPassword.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/approved.png'></a>";
-	echo "<a href='http://4.34.99.241/test/php/updateUserPassword.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/approved.png'></a>";
-	//echo "<a href='http://baymerchandise.com/cdr/m6ui/php/updateUserPassword.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/approved.png'></a>";
+	//echo "<a href='http://68.200.25.190/m6ui/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/approved.png'></a>";
+	echo "<a href='http://4.34.99.241/test/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/approved.png'></a>";
+	//echo "<a href='http://baymerchandise.com/cdr/m6ui/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/approved.png'></a>";
 	echo " ";
 	//$val3 = openssl_encrypt("X", $cipher, $key, 0, $iv);
 	$val3 = "N";
-	//echo "<a href='http://68.200.25.190/m6ui/php/updateUserPassword.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
-	echo "<a href='http://4.34.99.241/test/php/updateUserPassword.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
-	//echo "<a href='http://baymerchandise.com/cdr/m6ui/php/updateUserPassword.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
+	//echo "<a href='http://68.200.25.190/m6ui/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
+	echo "<a href='http://4.34.99.241/test/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
+	//echo "<a href='http://baymerchandise.com/cdr/m6ui/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
 	echo "
 	<p>
 	<br><br>

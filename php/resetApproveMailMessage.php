@@ -1,6 +1,6 @@
 <?php 
 
-function create_resetApprovalMailMessage($fromEmail, $toEmail, $subject, $userName, $userEmail, $userPhone, $userExt, $userPassword) 
+function create_resetApproveMailMessage($fromEmail, $toEmail, $subject, $userName, $userEmail, $userPhone, $userExt, $userPassword) 
 {	
 	$head = <<<HEAD
 <!doctype html>
@@ -71,7 +71,7 @@ HEAD;
 }
 
 /*
-create_resetApprovalMailMessage("wwebportaladmin@microv.net",
+create_resetApproveMailMessage("wwebportaladmin@microv.net",
 												 "alirsm@gmail.com",
 												 "HTML email",
 												 "John Smitj",

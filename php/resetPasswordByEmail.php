@@ -76,8 +76,8 @@ if ( $reset == "Y"  || $reset == "N" ) {
 				$log->i( "$self_filename (" . __LINE__ . "): password has been reset for email={$email} ext={$ext}" );
 				echo "The password for email: {$email} with extension: {$ext} has been reset.<br>";
 			
-				$ret = sendmailControllerFunc ($fname,$lname,$email,$phone,$ext,$partitionname,$usertype,$hashPassword,"ResetApproval");
-				//$ret = sendmailControllerFunc (null, null, $email, null, null, null, null, null, "ResetApproval");
+				$ret = sendmailControllerFunc ($fname,$lname,$email,$phone,$ext,$partitionname,$usertype,$hashPassword,"ResetApprove");
+				//$ret = sendmailControllerFunc (null, null, $email, null, null, null, null, null, "ResetApprove");
 									
 				if ( $ret == 1 ) {
 					echo "An approval email has been sent to ({$email}).";

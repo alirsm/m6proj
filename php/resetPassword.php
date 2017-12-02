@@ -12,9 +12,9 @@ $CLI = PHP_SAPI === 'cli';
 $cli = php_sapi_name();
 
 if ( $CLI ) {
-	$email="john@abcc.com";
+	$email="test@abc.com";
 	$ext = "1234";
-	$reset = "N";
+	$reset = "Y";
 }
 else {
 	$email = ! empty($_REQUEST['email']) ? $_REQUEST['email'] : NULL;
@@ -36,8 +36,9 @@ date_default_timezone_set('US/Eastern');
 $now = date("Y-m-d H:i:s");
 
 $db = new Db();
-//$sql = "select fname,lname,email,ext,status,lastlogin_time from M6User where email='$email'";
-$sql = "select fname,lname,phone,partitionname,usertype,status from M6User where email='$email' and ext='$ext'";
+//$sql = "select fname,lname,phone,partitionname,usertype,status from M6User where email='$email' and ext='$ext'";
+$sql = "select fname,lname,phone,partitionname,usertype,status from M6User where email='$email'";
+
 $log->i( $sql );
 $rows = $db -> select($sql);
 $count = count($rows);
@@ -55,49 +56,61 @@ if ( $count == 1 ) {
 		//$password = "abc125";
 		//$hashPassword = password_hash($password, PASSWORD_BCRYPT);
 		$hashPassword = $password;
-		$sql = "update M6User set password='$hashPassword', set reset='A' where email='$email' and ext='$ext'";
+		//$sql = "update M6User set password='$hashPassword', set reset='A' where email='$email' and ext='$ext'";
+		$sql = "update M6User set password='$hashPassword', reset='A' where email='$email'";
 		
 		if ( $db -> query($sql) ) {
 			$log->i( "$self_filename (" . __LINE__ . "): password has been reset for email={$email} ext={$ext}" );
 					
-			$ret = sendmailControllerFunc ($fname,$lname,$email,$phone,$ext,$partitionname,$usertype,$hashPassword,"ResetApproval");
+			$ret = sendmailControllerFunc ($fname,$lname,$email,$phone,$ext,$partitionname,$usertype,$hashPassword,"ResetApprove");
 					
 			if ( $ret == 1 ) {
 				$log->i( "$self_filename (" . __LINE__ . "): An approval email has been sent." );
-				$msg = "Password has been reset. An approval email has been sent.";
+				$msg = "Password has been reset. An approval email has been sent out.";
 				$ret = 1;
 			}
 			else {
 				$log->i( "$self_filename (" . __LINE__ . "): Unbale to send an approval email" );
-				$msg = "Password has been reset. Unbale to send an approval email.";
+				$msg = "Password has been reset. Unbale to send out an approval email.";
 				$ret = 0;
 			}
 		}
 		else {
-			$log->w( "$self_filename (" . __LINE__ . "): unable to reset password for email={$email} ext={$ext} : sql query error: sql={$sql}" );
-			$msg = "Error: Unable to reset password.";
+			$log->w( "$self_filename (" . __LINE__ . "): sql query error: sql={$sql}" );
+			$msg = "Error: Password reset failed.";
 			$ret = -1;
 		}
 	}
 	
 	else if ( $reset == "N" ) {
-		$ret = sendmailControllerFunc (null, null, $email, null, null , null, null, null, "ResetReject");
-	
-		if ( $ret == 1 ) {
-			$log->w( "$self_filename (" . __LINE__ . "): Reset password has been rejected. A Rejection email has been sent." );
-			$msg = "Reset password has been rejected. A Rejection email has been sent.";
-			$ret = 1;
+		$sql = "update M6User set reset='J' where email='$email'";
+		
+		if ( $db -> query($sql) ) {
+			$log->i( "$self_filename (" . __LINE__ . "): reset updated. reset=J" );
+				
+			$ret = sendmailControllerFunc (null, null, $email, null, null , null, null, null, "ResetReject");
+				
+			if ( $ret == 1 ) {
+				$log->i( "$self_filename (" . __LINE__ . "): A Rejection email has been sent out." );
+				$msg = "Reset password has been rejected. A Rejection email has been sent out.";
+				$ret = 1;
+			}
+			else {
+				$log->i( "$self_filename (" . __LINE__ . "): Unbale to send out a Rejection email" );
+				$msg = "Reset password has been rejected. Unable to send out a Rejection email.";
+				$ret = 0;
+			}
 		}
 		else {
-			$log->w( "$self_filename (" . __LINE__ . "): Reset password has been rejected. Unable to send a Rejection email." );
-			$msg = "Reset password has been rejected. Unable to send a Rejection email.";
-			$ret = 0;
-		}
+			$log->w( "$self_filename (" . __LINE__ . "): sql query error: sql={$sql}" );
+			$msg = "Error: Password reset failed.";
+			$ret = -1;
+		}		
 	}
 	
 	else {
 		$log->w( "$self_filename (" . __LINE__ . "): unable to reset password for email={$email} ext={$ext} reset={$reset} - An invalid value has been submitted ({$newstatus})" );
-		$msg = "Error: Unable to reset password. invalid value submitted.";
+		$msg = "Error: Invalid value submitted. Password reset failed.";
 		$ret = -1;
 	}
 

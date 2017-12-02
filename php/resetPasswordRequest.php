@@ -43,7 +43,7 @@ if ( $rows !== false) {
 			$ret = 1;
 				
 			/*
-			$ret = sendmailControllerFunc ($fname,$lname,$email,$phone,$ext,$partitionname,$usertype,$hashPassword,"ResetApproval");
+			$ret = sendmailControllerFunc ($fname,$lname,$email,$phone,$ext,$partitionname,$usertype,$hashPassword,"ResetApprove");
 				
 			if ( $ret == 1 ) {
 				$log->i( "$self_filename (" . __LINE__ . "): An approval email has been sent." );
