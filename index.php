@@ -58,36 +58,6 @@ require_once ("{$self_dir}php/functions.php");
 <!-- <img src="images/logo.png" width=10%/>-->
 
 <!-------  login  ---------------------------------------------->
-
-<!-- 
-<div id="login" class="hidden">
-<h2>Login</h2>
-<fieldset>
-<legend>Login</legend>
-<br>
-<label class="box1">Email Address: </label><input type="email" id="loginemail2" class="email" name="loginemail2" size="45" onblur="validate2(this)"><span id="err-loginemail" class="errmsg"></span><br>
-<label class="box1">Extension Number: </label><input type="text" id="loginextension2" name="loginextension2" size="45"><br>
-<label class="box1">Password: </label><input type="password" id="loginpassword2" name="loginextension2" size="45" onkeydown="if (event.keyCode == 13) document.getElementById('loginbutton').click()"><br>
-<br>
-<button id="loginbutton" class="ui-button ui-widget ui-corner-all" onclick="login_onclick()">Login</button><br>
-<br>
-<a href="javascript:void(0)" class="box1" onclick="showRegister_onclick()">Register Extension</a>
-<a href="javascript:void(0)" onclick="showForgetPassword_onclick()">Forget Password</a>
--->
-<!-- first time login  -->
-<!-- 
-<div id="firsttimelogin">
-<label class="box1">New Password: </label><input type="password" id="firsttimelogin1" name="firsttimelogin1" size="45"><br>
-<label class="box1">Retype New Password: </label><input type="password" id="firsttimelogin2" name="firsttimelogin2" size="45"><br>
-<br>
-<button id="firsttimeloginbutton" class="ui-button ui-widget ui-corner-all" onclick="firsttimelogin_onclick()">Login</button><br>
-</div>
-</fieldset>
-</div>
--->
-
-
-
 <div id="login">   
 <div id="loginform" class="loginpage"> 
 <div class="loginlogo"><img src="images/logo.png"></div>
@@ -119,9 +89,8 @@ require_once ("{$self_dir}php/functions.php");
 	<button id="loginbutton" class="button-primary" onclick="login_onclick()">Login</button>
 </div> 
 <div class="bottom-link">		
-	<a href="javascript:void(0)" class="box1" onclick="showRegister_onclick()">Register Extention</a>
+	<a href="javascript:void(0)" class="box1" onclick="showRegisterRequest_onclick()">Register Extension</a>
 	<div class="forgetpassword"><a href="javascript:void(0)" onclick="showForgetPassword_onclick()">Forget Password?</a></div>	
-	<!-- <a href="javascript:void(0)" class="box1" onclick="showRegister2_onclick()">Register Extention2</a> -->
 </div> 	
 </div>
 </div>
@@ -129,35 +98,6 @@ require_once ("{$self_dir}php/functions.php");
 
 
 <!-------  register  ------------------------------------------->
-
-<!-- 
-<div id="OLDregister" class="hidden">
-<h2>Register Extension</h2>
-<fieldset>
-<legend>Register</legend>
-<br>
-<label class="box1">First Name: </label><input type="text" id="registerfname" class="nonempty" name="registerfname" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerfname" class="errmsg"></span><br>
-<label class="box1">Last Name: </label><input type="text" id="registerlname" class="nonempty" name="registerlname" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerlname" class="errmsg"></span><br>
-<label class="box1">Email Address: </label><input type="email" id="registeremail" class="email" name="registeremail" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registeremail" class="errmsg"></span><br>
-<label class="box1">Phone Number: </label><input type="text" id="registerphone" class="phone" name="registerphone" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerphone" class="errmsg"></span><br>
-<label class="box1">Extension Number: </label><input type="text" id="registerext" class="extnumber" name="registerext" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerext" class="errmsg"></span><br>
-
-<label class="box1">Partition: </label><select id="registerpartition" name="partition"></select><br>
-<label class="box1">Login Type:</label>
-<input type="radio" id="registerradioA" name="register" value="A"/> Partition Admin
-<input type="radio" id="registerradioU" name="register" value="U" checked="checked"/> User
-
-<br>
-<button id="registerbtn" class="ui-button ui-widget ui-corner-all" onclick="register_onclick()">Send Request</button>
-<br><br>
-<a href="javascript:void(0)" onclick="returntoLogin()">Return to Log in</a>
-</fieldset>
-</div>
--->
-
-
-
-
 <div id="register" class="hidden"> 
 <div id="loginform" class="loginpage"> 
 <div class="loginlogo"><img src="images/logo.png">
@@ -179,17 +119,15 @@ require_once ("{$self_dir}php/functions.php");
 <p>Enter your email address and extension, your company admin will approve your request. You will then be sent your password after approval. <p>
 <br>
 <div class="login-submit"> 
-	<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Send" onclick="register_onclick()">
+	<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="Send" onclick="registerRequest_onclick()">
 </div> 
 <div class="login-return">
 	<a class="login-returnlink" href="javascript:void(0)" onclick="returntoLogin()">Return to Log in</a>
 </div>	
 </div>
 </div>
-
-
-
 <!-------  /register ------------------------------------------->
+
 
 <!-------  forgetpassword--------------------------------------->
 <div id="forgetpassword" class="hidden"> 
@@ -415,8 +353,8 @@ Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_on
 <input type="radio" id="userstatusradioA" name="userstatus" value="A" checked="checked"/> Approve
 <input type="radio" id="userstatusradioJ" name="userstatus" value="J"/> Reject-->
 <br>
-<button id="adduserbtn" class="ui-button ui-widget ui-corner-all" onclick="adduser_onclick('A')">Approve</button>
-<button id="adduserbtn2" class="ui-button ui-widget ui-corner-all" onclick="adduser_onclick('J')">Reject</button>
+<button id="adduserbtn" class="ui-button ui-widget ui-corner-all" onclick="register_onclick('A')">Approve</button>
+<button id="adduserbtn2" class="ui-button ui-widget ui-corner-all" onclick="register_onclick('J')">Reject</button>
 <button id="rejectRegisterButton" class="ui-button ui-widget ui-corner-all" onclick="adduser_reset_onclick()">Reset</button>
 </fieldset>
 <br><br>
@@ -454,4 +392,61 @@ Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_on
 </html>
 
 
+<!-------  OLD login  ---------------------------------------------->
+<!-- 
+<div id="login" class="hidden">
+<h2>Login</h2>
+<fieldset>
+<legend>Login</legend>
+<br>
+<label class="box1">Email Address: </label><input type="email" id="loginemail2" class="email" name="loginemail2" size="45" onblur="validate2(this)"><span id="err-loginemail" class="errmsg"></span><br>
+<label class="box1">Extension Number: </label><input type="text" id="loginextension2" name="loginextension2" size="45"><br>
+<label class="box1">Password: </label><input type="password" id="loginpassword2" name="loginextension2" size="45" onkeydown="if (event.keyCode == 13) document.getElementById('loginbutton').click()"><br>
+<br>
+<button id="loginbutton" class="ui-button ui-widget ui-corner-all" onclick="login_onclick()">Login</button><br>
+<br>
+<a href="javascript:void(0)" class="box1" onclick="showRegisterRequest_onclick()">Register Extension</a>
+<a href="javascript:void(0)" onclick="showForgetPassword_onclick()">Forget Password</a>
+-->
+<!-- first time login  -->
+<!-- 
+<div id="firsttimelogin">
+<label class="box1">New Password: </label><input type="password" id="firsttimelogin1" name="firsttimelogin1" size="45"><br>
+<label class="box1">Retype New Password: </label><input type="password" id="firsttimelogin2" name="firsttimelogin2" size="45"><br>
+<br>
+<button id="firsttimeloginbutton" class="ui-button ui-widget ui-corner-all" onclick="firsttimelogin_onclick()">Login</button><br>
+</div>
+</fieldset>
+</div>
+-->
+<!-------  /OLD login ---------------------------------------------->
+
+
+<!-------  OLD register  ------------------------------------------->
+
+<!-- 
+<div id="OLDregister" class="hidden">
+<h2>Register Extension</h2>
+<fieldset>
+<legend>Register</legend>
+<br>
+<label class="box1">First Name: </label><input type="text" id="registerfname" class="nonempty" name="registerfname" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerfname" class="errmsg"></span><br>
+<label class="box1">Last Name: </label><input type="text" id="registerlname" class="nonempty" name="registerlname" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerlname" class="errmsg"></span><br>
+<label class="box1">Email Address: </label><input type="email" id="registeremail" class="email" name="registeremail" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registeremail" class="errmsg"></span><br>
+<label class="box1">Phone Number: </label><input type="text" id="registerphone" class="phone" name="registerphone" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerphone" class="errmsg"></span><br>
+<label class="box1">Extension Number: </label><input type="text" id="registerext" class="extnumber" name="registerext" size="45" onblur="validate2(this)"><span class="errmsg">*</span><span id="err-registerext" class="errmsg"></span><br>
+
+<label class="box1">Partition: </label><select id="registerpartition" name="partition"></select><br>
+<label class="box1">Login Type:</label>
+<input type="radio" id="registerradioA" name="register" value="A"/> Partition Admin
+<input type="radio" id="registerradioU" name="register" value="U" checked="checked"/> User
+
+<br>
+<button id="registerbtn" class="ui-button ui-widget ui-corner-all" onclick="registerRequest_onclick()">Send Request</button>
+<br><br>
+<a href="javascript:void(0)" onclick="returntoLogin()">Return to Log in</a>
+</fieldset>
+</div>
+-->
+<!-------  /OLD register ---------------------------------------------->
 

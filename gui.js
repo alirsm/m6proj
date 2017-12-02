@@ -268,7 +268,7 @@ function firsttimelogin_onclick(email) {
 /***************************************************************
 Detail  :       Show Register div
 ***************************************************************/
-function showRegister_onclick() {
+function showRegisterRequest_onclick() {
 	console.log(arguments.callee.name + " --> ");
 	
 	//jQuery("#login").addClass('hidden');
@@ -278,15 +278,10 @@ function showRegister_onclick() {
 	//getPartitionForRegister();
 }
 
-function showRegister2_onclick() {
-	jQuery("#login").hide();
-	jQuery("#OLDregister").removeClass('hidden');
-	getPartitionForRegister();
-}
 /***************************************************************
-Detail  :       Send Register Request
+Detail  :       Register Request
 ***************************************************************/
-function register_onclick() {	
+function registerRequest_onclick() {	
 	console.log(arguments.callee.name + " --> ");
 	
 	/*
@@ -305,7 +300,6 @@ function register_onclick() {
 	var fname = jQuery("#registerfname").val();
 	var lname = jQuery("#registerlname").val();
 	var email = jQuery("#registeremail").val();
-	//var phone = jQuery("#registerphone").val();
 	var ext = jQuery("#registerext").val();
 	var status = "R";
 	
@@ -324,7 +318,7 @@ function register_onclick() {
 	
 // add user with status=R
 	jQuery.ajax({
-		url: "php/registeruser.php",
+		url: "php/registerRequest.php",
 		data: { fname: fname,
 				  lname: lname,
 				  email: email,
@@ -334,8 +328,19 @@ function register_onclick() {
 		dataType: "json",
 		success: function(result, status) {
 			console.log(result);
-			//infodialog("Info message", result.msg);
-							
+			if ( result.ret == 1 ) {
+				infodialog("Info message", result.msg);
+			}
+			else if ( result.ret == 0 ){
+				alertdialog("Alert message", result.msg);
+			}
+			else {
+				errdialog("Error message", result.msg);
+			}
+
+			
+			
+			/*
 			// if user added then send email
 			if ( result.ret == 1 ) {
 				jQuery.ajax({
@@ -363,7 +368,7 @@ function register_onclick() {
 			else {
 				errdialog("Error message", result.msg);
 			}
-			
+			*/
 			
 		},
 		error: function() {
@@ -427,7 +432,7 @@ function forgetpassword_onclick() {
 
 	
 	jQuery.ajax({
-		url: "php/resetRequest.php",
+		url: "php/resetPasswordRequest.php",
 		data: { fname: fname,
 				  lname: lname,
 				  email: email,
@@ -640,17 +645,15 @@ function loadPartitionInfo(result) {
 */
 
 /***************************************************************
-Detail  :       Add User
+Detail  :       Register User
 ***************************************************************/
-function adduser_onclick(userstatus) {	
+function register_onclick(userstatus) {	
 	console.log(arguments.callee.name + " --> " + "%s", userstatus);
 	
 	var email = jQuery("#adduseremail").val();
 	var ext = jQuery("#adduserext").val();
-	//var status = "A";
 	var fname = jQuery("#adduserfname").val();
 	var lname = jQuery("#adduserlname").val();
-	//var phone = jQuery("#adduserphone").val();
 	var partitionname = jQuery("#adduserpartition").val();
 	
 	var usertype;
@@ -685,9 +688,9 @@ function adduser_onclick(userstatus) {
 	*/
 	
 	if ( userstatus == "J" ) {
-		msg = "Are you sure you want to Reject the request?"
+		msg = "Are you sure you want to Reject register request?"
 	} else if ( userstatus == "A" ) {
-		msg = "Are you sure you want to Approve the request?"
+		msg = "Are you sure you want to Approve register request?"
 	}
 	//msg = "Are you sure about your selection?"
 	
@@ -697,7 +700,7 @@ function adduser_onclick(userstatus) {
 		resizable: false,
       //height: "auto",
       //width: 400,
-		title: "hello",
+		title: "Confirmation",
 		dialogClass: 'alertTitleClass',
 		buttons: {
 			"Yes": function() {
@@ -705,9 +708,8 @@ function adduser_onclick(userstatus) {
 				console.log("Close selected ret =" + ret);
 				$(this).dialog("close");
 				
-
 				jQuery.ajax({
-					url: "php/adduser.php",
+					url: "php/register.php",
 					data: { status: userstatus,
 							email: email,
 							partitionname: partitionname,
@@ -717,10 +719,10 @@ function adduser_onclick(userstatus) {
 					success: function(result, textStatus) {
 						console.log(result);
 						if ( result.ret == 1 ) {
-							password = result.password;
+							//password = result.password;
 							infodialog("Info message", result.msg);
 							loaduser();
-							sendmailController(fname,lname,email,ext,password,userstatus)
+							//sendmailController(fname,lname,email,ext,password,userstatus)
 							console.log("infomessage");
 						}
 						else if ( result.ret == -1 ){
@@ -736,8 +738,7 @@ function adduser_onclick(userstatus) {
 					error: function() {
 						alert('Not OKay');
 					}
-				}); 
-				
+				}); 	
 				
 			},
 			"Cancel": function() {
@@ -748,49 +749,6 @@ function adduser_onclick(userstatus) {
 		}	
 		
 	});
-	
-	
-	
-	
-	
-	//var r = confirm("Are you sure?");
-	//if ( r == true) {
-		
-	/*
-	jQuery.ajax({
-		url: "php/adduser.php",
-		data: { status: userstatus,
-				email: email,
-				partitionname: partitionname,
-				usertype: usertype},
-		dataType: 'json',
-		type: "post",
-		success: function(result, textStatus) {
-			console.log(result);
-			if ( result.ret == 1 ) {
-				password = result.password;
-				infodialog("Info message", result.msg);
-				loaduser();
-				sendmailController(fname,lname,email,ext,password,userstatus)
-				console.log("infomessage");
-			}
-			else if ( result.ret == -1 ){
-				alertdialog("Alert message", result.msg);
-			}
-			else {
-				errdialog("Error message", result.msg);
-			}
-			//var obj = jQuery.parseJSON(result);
-			//console.log(obj[0].zipcode);
-			//loadPartitionInfo(result);
-		},
-		error: function() {
-			alert('Not OKay');
-		}
-	}); 
-	*/
-	
-	//}
 	
 }
 
@@ -843,7 +801,7 @@ function resetPassword_onclick(reset) {
 		resizable: false,
       //height: "auto",
       //width: 400,
-		title: "hello",
+		title: "Confirmation",
 		dialogClass: 'alertTitleClass',
 		buttons: {
 			"Yes": function() {
@@ -851,9 +809,8 @@ function resetPassword_onclick(reset) {
 				console.log("Close selected ret =" + ret);
 				$(this).dialog("close");
 				
-
 				jQuery.ajax({
-					url: "php/updatePassword2.php",
+					url: "php/resetPassword.php",
 					data: { email: email,
 							ext: ext,
 							reset: reset },
@@ -865,7 +822,7 @@ function resetPassword_onclick(reset) {
 							password = result.password;
 							infodialog("Info message", result.msg);
 							loaduser();
-							sendmailController(fname,lname,email,ext,password,userstatus)
+							//sendmailController(fname,lname,email,ext,password,userstatus)
 							console.log("infomessage");
 						}
 						else if ( result.ret == 0 ){
@@ -881,8 +838,7 @@ function resetPassword_onclick(reset) {
 					error: function() {
 						alert('Not OKay');
 					}
-				}); 
-				
+				}); 	
 				
 			},
 			"Cancel": function() {
@@ -893,9 +849,6 @@ function resetPassword_onclick(reset) {
 		}	
 		
 	});	
-	
-	
-	
 	
 }
 

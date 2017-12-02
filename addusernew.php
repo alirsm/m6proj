@@ -85,7 +85,7 @@ require_once ("{$self_dir}php/functions.php");
     <label>Short</label><input type="text" />
 </div>
 
-<button id="adduserbtn" class="ui-button ui-widget ui-corner-all" onclick="adduser_onclick()">Add User</button>
+<button id="adduserbtn" class="ui-button ui-widget ui-corner-all" onclick="register_onclick()">Add User</button>
 -->
 
 </div>
