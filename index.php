@@ -265,14 +265,15 @@ require_once ("{$self_dir}php/functions.php");
 <br>
 <fieldset>
 <legend>Export</legend>
-Email to: <input type="text"><button id="exportreportemail" onclick="exportreportemail_onclick()">Submit</button><br>
+<!-- Email to: <input type="text"><button id="exportreportemail" onclick="exportreportemail_onclick()">Submit</button>--> <br>
 Export report to CSV: <button id="exportreportcsv" onclick="exportreportcsv_onclick()">Submit</button><br>
-Export report to PDF: <button id="exportreportpdf" onclick="exportreportpdf_onclick()">Submit</button><br>
+<!-- Export report to PDF: <button id="exportreportpdf" onclick="exportreportpdf_onclick()">Submit</button><br> -->
 </fieldset>
 <br>
 <div id="messagediv" style="color:#0000FF"></div>
 <br>
 <div id="cdrtablediv"></div>
+<div id="cdrtablecsvdiv"></div>
 </div>
 <!-------  /tab 3  --------------------------------------------->
 
@@ -303,6 +304,7 @@ Export report to PDF: <button id="exportreportpdf" onclick="exportreportpdf_oncl
 <button id="createctm" class="ui-button ui-widget ui-corner-all" onclick="createCTM_onclick()">Create Report</button>
 </fieldset>
 <br>
+<!--
 <fieldset>
 <legend>Export</legend>
 Email to: <input type="text"><button id="exportreportemail2" onclick="exportreportemail2_onclick()">Submit</button><br>
@@ -310,8 +312,9 @@ Export report to CSV: <button id="exportreportcsv2" onclick="exportreportcsv2_on
 Export report to PDF: <button id="exportreportpdf2" onclick="exportreportpdf2_onclick()">Submit</button><br>
 </fieldset>
 <br>
+-->
 <div id="ctmmessagediv"></div>
-<br>
+
 <div id="ctmtablediv" style="display:none"></div>
 <br>
 <div id="ctmtablediv2" style="display:none"></div>

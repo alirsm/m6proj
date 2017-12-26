@@ -69,9 +69,8 @@ HEAD;
 	<td style='font-size:25px;'>"; echo $userExt; echo "</td>
 	</tr>";
 		
-	echo "</table>";
+	echo "</table><br><br>";
 	
-	/*
 	//$val3 = openssl_encrypt("A", $cipher, $key, 0, $iv);
 	$val3 = "Y";
 	//echo "<a href='http://68.200.25.190/m6ui/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/approved.png'></a>";
@@ -83,11 +82,9 @@ HEAD;
 	//echo "<a href='http://68.200.25.190/m6ui/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
 	echo "<a href='http://4.34.99.241/test/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
 	//echo "<a href='http://baymerchandise.com/cdr/m6ui/php/resetPasswordByEmail.php?val1=" . $val1 . "&val2=" . $val2 . "&val3=" . $val3. "'><img src='http://4.34.99.241/images/rejected.png' style='margin-left:10%;'></a>";
-	*/
-	
 	echo "
 	<p>
-	<br>
+	<br><br>
 	This message and any attachments are solely for the intended recipient and may contain confidential or privileged  information. if you are not the intended recipient,any disclosure, copying, use, or distribution of the information included in this message and any attachments is prohibited. If you have received this communication in error, please notify us by reply e-mail and immediately and permanently delete this message and any attachments.
 	</p>
 	</body></html>";

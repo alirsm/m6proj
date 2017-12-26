@@ -8,6 +8,8 @@ function init() {
 	//jQuery("#firsttimelogin2").hide();
 	//jQuery("#firsttimeloginbutton").hide();
 	
+	jQuery("#cdrtablecsvdiv").hide();
+	
 	jQuery("#login").show();
 	jQuery("#tabs-5").addClass('hidden');
 	clearAll();
@@ -1248,7 +1250,12 @@ function createCDR_onclick() {
 		dataType: 'json',
 		success: function(result, textStatus) {
 			jQuery("body").removeClass("waiting");
-			//console.log(result.count);	
+			tablestring = "<table id='cdrtable' class='display'>";
+			tablestring = tablestring + result.data;
+			console.log(tablestring);
+			csvstring = "<table id='cdrtablecsv'>";
+			csvstring = csvstring + result.data;
+			//console.log(result.data);	
 			//console.log(result.count);
 			jQuery("#messagediv").text("");
 			//jQuery("#searchnumber").val("");
@@ -1256,7 +1263,10 @@ function createCDR_onclick() {
 				jQuery("#messagediv").text("Total count: " + result.count + ", Display only 5000 records");
 			}
 			//$('html, body').css("cursor", "default");  
-			jQuery("#cdrtablediv").html(result.data);
+			//jQuery("#cdrtablediv").html(result.data);
+			jQuery("#cdrtablediv").html(tablestring);
+			jQuery("#cdrtablecsvdiv").html(csvstring);
+			//$("#cdrtable").tableToCSV();
 	    	jQuery('#cdrtable').DataTable({ 
 	    		"paging": true,
 	    		"bPaginate": true,
@@ -1276,7 +1286,7 @@ Detail  :       Export report to CSV file
 function exportreportcsv_onclick(){
 	console.log(arguments.callee.name + " --> ");
 	
-	$("#cdrtable").tableToCSV();
+	$("#cdrtablecsv").tableToCSV();
 	
 }
 

@@ -11,8 +11,9 @@ $CLI = PHP_SAPI === 'cli';
 $cli = php_sapi_name();
 
 if ( $CLI ) {
-	$partition="Alpha Health";$user="9737317868";$fromdate="2016-01-01";$todate="2016-12-31";$number="17132956741";
-	$callTypeSelected="'INTL', 'INTERSTATE'";$callDirectionSelected="O";
+	//$partition="Alpha Health";$user="9737317868";$fromdate="2016-01-01";$todate="2016-12-31";$number="17132956741";
+	//$callTypeSelected="'INTL'";$callDirectionSelected="O";$user="";$fromdate="";$todate="";$number="";
+	$partition="Bcs Inc";$callTypeSelected="'INTL'";$callDirectionSelected="O";$user="";$fromdate="";$todate="";$number="";
 	//$partition="All";$user="All";$fromdate="";$todate="";$number="";
 }
 else {
@@ -63,8 +64,9 @@ if ( $count > 5000 ) {
 
 $field_list = array("TimeStart","TimeEnd","SrcCallerId","DstCallerId","Duration(min)","CallDirection","CallType");
 
-$result = "<table id='cdrtable' class='display'>";
-$result .= "<thead align='left'><tr>";
+//$result = "<table id='cdrtable' class='display'>";
+//$result .= "<thead align='left'><tr>";
+$result = "<thead align='left'><tr>";
 foreach ($field_list as $field)
 {
 	$result .= "<th>{$field}</th>";
